@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Calcula el beneficio y el margen de una venta ecommerce a partir de sus costes."
+    />
+    <meta name="theme-color" content="#f3f7f5" />
+    <title>Calculadora de margen ecommerce</title>
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='15' fill='%23143d33'/%3E%3Cpath d='M17 22h30l-3 19H21z' fill='%23d8f65a'/%3E%3Cpath d='M25 22a7 7 0 0 1 14 0' fill='none' stroke='%23d8f65a' stroke-width='4' stroke-linecap='round'/%3E%3C/svg%3E"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <main class="page-shell">
+      <section class="calculator" aria-labelledby="page-title">
+        <header class="intro">
+          <p class="eyebrow">Rentabilidad por venta</p>
+          <h1 id="page-title">Calculadora de margen</h1>
+          <p>Introduce los importes de una venta para conocer cuánto ganas realmente.</p>
+        </header>
+
+        <div class="workspace">
+          <form id="margin-form" class="form-panel" novalidate>
+            <div class="field-grid">
+              <div class="field">
+                <label for="product-cost">Coste del producto</label>
+                <div class="input-wrap">
+                  <input id="product-cost" name="productCost" type="number" min="0" step="0.01" inputmode="decimal" placeholder="0,00" required />
+                  <span aria-hidden="true">€</span>
+                </div>
+              </div>
+
+              <div class="field">
+                <label for="shipping-cost">Coste de envío</label>
+                <div class="input-wrap">
+                  <input id="shipping-cost" name="shippingCost" type="number" min="0" step="0.01" inputmode="decimal" placeholder="0,00" required />
+                  <span aria-hidden="true">€</span>
+                </div>
+              </div>
+
+              <div class="field">
+                <label for="advertising-cost">Gasto en publicidad</label>
+                <div class="input-wrap">
+                  <input id="advertising-cost" name="advertisingCost" type="number" min="0" step="0.01" inputmode="decimal" placeholder="0,00" required />
+                  <span aria-hidden="true">€</span>
+                </div>
+              </div>
+
+              <div class="field">
+                <label for="sale-price">Precio de venta</label>
+                <div class="input-wrap">
+                  <input id="sale-price" name="salePrice" type="number" min="0.01" step="0.01" inputmode="decimal" placeholder="0,00" required />
+                  <span aria-hidden="true">€</span>
+                </div>
+              </div>
+
+              <div class="field">
+                <label for="platform-commission">% comisión de plataforma</label>
+                <div class="input-wrap">
+                  <input id="platform-commission" name="platformCommissionPercent" type="number" min="0" max="100" step="0.01" inputmode="decimal" placeholder="0,00" required />
+                  <span aria-hidden="true">%</span>
+                </div>
+              </div>
+            </div>
+
+            <p id="form-error" class="form-error" role="alert" aria-live="polite"></p>
+            <button type="submit">Calcular margen</button>
+          </form>
+
+          <aside id="result-panel" class="result-panel" aria-live="polite" aria-atomic="true">
+            <div class="result-heading">
+              <span class="status-dot" aria-hidden="true"></span>
+              <span>Resultado</span>
+            </div>
+
+            <div class="primary-result">
+              <span>Beneficio</span>
+              <strong id="profit-result">—</strong>
+            </div>
+
+            <div class="margin-result">
+              <span>Margen sobre la venta</span>
+              <strong id="margin-result">—</strong>
+            </div>
+
+            <div class="commission-summary">
+              <span>Comisión de plataforma</span>
+              <strong id="commission-result">—</strong>
+            </div>
+
+            <div class="cost-summary">
+              <span>Costes totales</span>
+              <strong id="cost-result">—</strong>
+            </div>
+
+            <p id="result-note">Completa los datos para ver el resultado.</p>
+          </aside>
+        </div>
+
+        <p class="formula-note">Margen = beneficio ÷ precio de venta × 100</p>
+      </section>
+    </main>
+  </body>
+</html>
