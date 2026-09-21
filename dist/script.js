@@ -1,3 +1,5 @@
+import { calculate } from "./calculator.mjs";
+
 const form = document.querySelector("#margin-form");
 const errorMessage = document.querySelector("#form-error");
 const resultPanel = document.querySelector("#result-panel");
@@ -57,14 +59,6 @@ function validate(values) {
 
   errorMessage.textContent = "";
   return true;
-}
-
-function calculate(values) {
-  const commission = values.salePrice * (values.platformCommissionPercent / 100);
-  const totalCosts = values.productCost + values.shippingCost + values.advertisingCost + commission;
-  const profit = values.salePrice - totalCosts;
-  const margin = profit / values.salePrice;
-  return { totalCosts, commission, profit, margin };
 }
 
 function renderResult(result) {
