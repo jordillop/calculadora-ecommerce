@@ -219,9 +219,7 @@ button:focus-visible {
 }
 
 .primary-result span,
-.margin-result span,
-.commission-summary span,
-.cost-summary span {
+.result-row span {
   color: #c5d7d1;
   font-size: 0.9rem;
 }
@@ -232,9 +230,7 @@ button:focus-visible {
   line-height: 1;
 }
 
-.margin-result,
-.commission-summary,
-.cost-summary {
+.result-row {
   display: flex;
   align-items: baseline;
   justify-content: space-between;
@@ -243,9 +239,7 @@ button:focus-visible {
   border-top: 1px solid rgba(255, 255, 255, 0.16);
 }
 
-.margin-result strong,
-.commission-summary strong,
-.cost-summary strong {
+.result-row strong {
   font-size: 1.25rem;
 }
 

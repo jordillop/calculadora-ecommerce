@@ -1,8 +1,23 @@
 export function calculate(values) {
-  const commission = values.salePrice * (values.platformCommissionPercent / 100);
+  const discountAmount = values.salePrice * (values.discountPercent / 100);
+  const discountedSalePrice = values.salePrice - discountAmount;
+  const revenueExVat = discountedSalePrice / (1 + values.vatPercent / 100);
+  const vatAmount = discountedSalePrice - revenueExVat;
+  const commission = discountedSalePrice * (values.platformCommissionPercent / 100);
+  const grossProfit = revenueExVat - values.productCost;
   const totalCosts = values.productCost + values.shippingCost + values.advertisingCost + commission;
-  const profit = values.salePrice - totalCosts;
-  const margin = profit / values.salePrice;
+  const profit = revenueExVat - totalCosts;
+  const margin = revenueExVat === 0 ? 0 : profit / revenueExVat;
 
-  return { totalCosts, commission, profit, margin };
+  return {
+    commission,
+    discountAmount,
+    discountedSalePrice,
+    grossProfit,
+    margin,
+    profit,
+    revenueExVat,
+    totalCosts,
+    vatAmount,
+  };
 }

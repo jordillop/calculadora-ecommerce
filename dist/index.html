@@ -62,6 +62,22 @@
               </div>
 
               <div class="field">
+                <label for="vat-percent">IVA (%)</label>
+                <div class="input-wrap">
+                  <input id="vat-percent" name="vatPercent" type="number" min="0" max="100" step="0.01" inputmode="decimal" placeholder="21,00" required />
+                  <span aria-hidden="true">%</span>
+                </div>
+              </div>
+
+              <div class="field">
+                <label for="discount-percent">Descuento (%)</label>
+                <div class="input-wrap">
+                  <input id="discount-percent" name="discountPercent" type="number" min="0" max="100" step="0.01" inputmode="decimal" placeholder="0,00" required />
+                  <span aria-hidden="true">%</span>
+                </div>
+              </div>
+
+              <div class="field">
                 <label for="platform-commission">% comisión de plataforma</label>
                 <div class="input-wrap">
                   <input id="platform-commission" name="platformCommissionPercent" type="number" min="0" max="100" step="0.01" inputmode="decimal" placeholder="0,00" required />
@@ -85,17 +101,37 @@
               <strong id="profit-result">—</strong>
             </div>
 
-            <div class="margin-result">
+            <div class="result-row margin-result">
               <span>Margen sobre la venta</span>
               <strong id="margin-result">—</strong>
             </div>
 
-            <div class="commission-summary">
+            <div class="result-row gross-profit-summary">
+              <span>Beneficio bruto</span>
+              <strong id="gross-profit-result">—</strong>
+            </div>
+
+            <div class="result-row revenue-summary">
+              <span>Ingresos sin IVA</span>
+              <strong id="revenue-ex-vat-result">—</strong>
+            </div>
+
+            <div class="result-row discount-summary">
+              <span>Descuento aplicado</span>
+              <strong id="discount-result">—</strong>
+            </div>
+
+            <div class="result-row vat-summary">
+              <span>IVA incluido</span>
+              <strong id="vat-result">—</strong>
+            </div>
+
+            <div class="result-row commission-summary">
               <span>Comisión de plataforma</span>
               <strong id="commission-result">—</strong>
             </div>
 
-            <div class="cost-summary">
+            <div class="result-row cost-summary">
               <span>Costes totales</span>
               <strong id="cost-result">—</strong>
             </div>
@@ -104,7 +140,7 @@
           </aside>
         </div>
 
-        <p class="formula-note">Margen = beneficio ÷ precio de venta × 100</p>
+        <p class="formula-note">Margen = beneficio ÷ ingresos sin IVA × 100</p>
       </section>
     </main>
   </body>

@@ -5,6 +5,10 @@ const errorMessage = document.querySelector("#form-error");
 const resultPanel = document.querySelector("#result-panel");
 const profitResult = document.querySelector("#profit-result");
 const marginResult = document.querySelector("#margin-result");
+const grossProfitResult = document.querySelector("#gross-profit-result");
+const revenueExVatResult = document.querySelector("#revenue-ex-vat-result");
+const discountResult = document.querySelector("#discount-result");
+const vatResult = document.querySelector("#vat-result");
 const commissionResult = document.querySelector("#commission-result");
 const costResult = document.querySelector("#cost-result");
 const resultNote = document.querySelector("#result-note");
@@ -28,6 +32,8 @@ function readValues() {
     shippingCost: Number(data.get("shippingCost")),
     advertisingCost: Number(data.get("advertisingCost")),
     salePrice: Number(data.get("salePrice")),
+    vatPercent: Number(data.get("vatPercent")),
+    discountPercent: Number(data.get("discountPercent")),
     platformCommissionPercent: Number(data.get("platformCommissionPercent")),
   };
 }
@@ -64,6 +70,10 @@ function validate(values) {
 function renderResult(result) {
   profitResult.textContent = currency.format(result.profit);
   marginResult.textContent = percent.format(result.margin);
+  grossProfitResult.textContent = currency.format(result.grossProfit);
+  revenueExVatResult.textContent = currency.format(result.revenueExVat);
+  discountResult.textContent = currency.format(result.discountAmount);
+  vatResult.textContent = currency.format(result.vatAmount);
   commissionResult.textContent = currency.format(result.commission);
   costResult.textContent = currency.format(result.totalCosts);
   resultPanel.classList.toggle("is-negative", result.profit < 0);
@@ -77,6 +87,8 @@ function setFormValues(values) {
   document.querySelector("#shipping-cost").value = values.shippingCost;
   document.querySelector("#advertising-cost").value = values.advertisingCost;
   document.querySelector("#sale-price").value = values.salePrice;
+  document.querySelector("#vat-percent").value = values.vatPercent;
+  document.querySelector("#discount-percent").value = values.discountPercent;
   document.querySelector("#platform-commission").value = values.platformCommissionPercent;
 }
 
@@ -91,9 +103,11 @@ function registerCalculationTool() {
       shippingCost: { type: "number", minimum: 0 },
       advertisingCost: { type: "number", minimum: 0 },
       salePrice: { type: "number", exclusiveMinimum: 0 },
+      vatPercent: { type: "number", minimum: 0, maximum: 100 },
+      discountPercent: { type: "number", minimum: 0, maximum: 100 },
       platformCommissionPercent: { type: "number", minimum: 0, maximum: 100 },
     },
-    required: ["productCost", "shippingCost", "advertisingCost", "salePrice", "platformCommissionPercent"],
+    required: ["productCost", "shippingCost", "advertisingCost", "salePrice", "vatPercent", "discountPercent", "platformCommissionPercent"],
     additionalProperties: false,
   };
 
@@ -109,6 +123,8 @@ function registerCalculationTool() {
         shippingCost: Number(input?.shippingCost),
         advertisingCost: Number(input?.advertisingCost),
         salePrice: Number(input?.salePrice),
+        vatPercent: Number(input?.vatPercent),
+        discountPercent: Number(input?.discountPercent),
         platformCommissionPercent: Number(input?.platformCommissionPercent),
       };
 
@@ -117,10 +133,14 @@ function registerCalculationTool() {
         && values.shippingCost >= 0
         && values.advertisingCost >= 0
         && values.salePrice > 0
+        && values.vatPercent >= 0
+        && values.vatPercent <= 100
+        && values.discountPercent >= 0
+        && values.discountPercent <= 100
         && values.platformCommissionPercent >= 0
         && values.platformCommissionPercent <= 100;
 
-      if (!isValid) throw new Error("Los costes deben ser positivos o cero, la comisión debe estar entre 0 y 100 %, y el precio de venta debe ser mayor que cero.");
+      if (!isValid) throw new Error("Los costes deben ser positivos o cero; IVA, descuento y comisión deben estar entre 0 y 100 %; y el precio de venta debe ser mayor que cero.");
 
       const result = calculate(values);
       setFormValues(values);
@@ -128,6 +148,10 @@ function registerCalculationTool() {
       return {
         profit: Number(result.profit.toFixed(2)),
         marginPercent: Number((result.margin * 100).toFixed(1)),
+        grossProfit: Number(result.grossProfit.toFixed(2)),
+        revenueExVat: Number(result.revenueExVat.toFixed(2)),
+        discountAmount: Number(result.discountAmount.toFixed(2)),
+        vatAmount: Number(result.vatAmount.toFixed(2)),
         commission: Number(result.commission.toFixed(2)),
         totalCosts: Number(result.totalCosts.toFixed(2)),
       };
